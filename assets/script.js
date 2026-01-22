@@ -17,6 +17,7 @@ const slides = [
 	}
 ]
 
+// Définition et écouteurs d'évènements sur les flèches
 const leftArrow = document.querySelector('.arrow_left')
 leftArrow.addEventListener('click', (event) => {
 	console.log(event.target)
@@ -26,3 +27,11 @@ rightArrow.addEventListener('click', (event) => {
 	console.log(event.target)
 })
 
+// Insertion des bullet points
+const dotContainer = document.querySelector('.dots')
+for(let index=0; index<slides.length; index++) {
+	const dot = document.createElement('div')
+	dot.classList.add('dot')
+	if(index==0) dot.classList.add('dot_selected')
+	dotContainer.appendChild(dot)
+}
