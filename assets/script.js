@@ -34,10 +34,10 @@ function displaySelectedDot(index) {
 // Définition du titre et de l'image du slide
 let slideImg = document.querySelector('#banner .banner-img')
 let slideTitle = document.querySelector('#banner .tagLine')
-let slideIndex = 0
+const dotContainer = document.querySelector('.dots')
+
 
 // Insertion des dots et définition de la série de dots
-const dotContainer = document.querySelector('.dots')
 for(let index=0; index<slides.length; index++) {
 	const dot = document.createElement('div')
 	dot.classList.add('dot')
@@ -45,7 +45,8 @@ for(let index=0; index<slides.length; index++) {
 }
 const dots = document.querySelectorAll('.dot')
 
-//  Afichage de l'image et du titre de la slide ainsi que du dot sélectionné
+//  Afichage au premier chargement de l'image et du titre de la slide ainsi que du dot sélectionné
+let slideIndex = 0
 displaySlide(slideIndex)
 displaySelectedDot(slideIndex)
 
@@ -53,16 +54,24 @@ displaySelectedDot(slideIndex)
 const leftArrow = document.querySelector('.arrow_left')
 leftArrow.addEventListener('click', (event) => {
 	slideIndex--
+	if(slideIndex === -1) { 
+		slideIndex = slides.length-1
+	}
 	displaySlide(slideIndex)
 	displaySelectedDot(slideIndex)
-
+	
 })
 
 const rightArrow = document.querySelector('.arrow_right')
 rightArrow.addEventListener('click', (event) => {
 	slideIndex++
+	if(slideIndex === (slides.length)) { 
+		slideIndex = 0
+	}
 	displaySlide(slideIndex)
-	displaySelectedDot(slideIndex)
+		displaySelectedDot(slideIndex)
+	
+	
 })
 
 
