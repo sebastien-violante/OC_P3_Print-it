@@ -40,6 +40,7 @@ const dotContainer = document.querySelector('.dots')
 // Insertion des dots et définition de la série de dots
 for(let index=0; index<slides.length; index++) {
 	const dot = document.createElement('div')
+	dot.id=index
 	dot.classList.add('dot')
 	dotContainer.appendChild(dot)
 }
@@ -50,28 +51,49 @@ let slideIndex = 0
 displaySlide(slideIndex)
 displaySelectedDot(slideIndex)
 
-// Définition et écouteurs d'évènements sur les flèches
+// Définition et écouteurs d'évènements sur les flèches et les dots
 const leftArrow = document.querySelector('.arrow_left')
-leftArrow.addEventListener('click', (event) => {
-	slideIndex--
-	if(slideIndex === -1) { 
-		slideIndex = slides.length-1
-	}
-	displaySlide(slideIndex)
-	displaySelectedDot(slideIndex)
-	
+leftArrow.addEventListener('click', () => {
+	const newIndex = changeSlide('previous')
+	displaySlide(newIndex)
+	displaySelectedDot(newIndex)
 })
 
 const rightArrow = document.querySelector('.arrow_right')
-rightArrow.addEventListener('click', (event) => {
-	slideIndex++
-	if(slideIndex === (slides.length)) { 
-		slideIndex = 0
-	}
+rightArrow.addEventListener('click', () => {
+	const newIndex = changeSlide()
 	displaySlide(slideIndex)
-		displaySelectedDot(slideIndex)
-	
-	
+	displaySelectedDot(slideIndex)	
 })
 
+document.querySelectorAll('.dot').forEach(dot => {
+	dot.addEventListener('click', (event) => {
+		const newIndex = changeSlide(Number(event.target.id))
+		displaySlide(newIndex)
+		displaySelectedDot(newIndex)	
+	})
+})
 
+// Méthode permettant de changer de slide en fonction d'un clic sur flèche ou sur dot
+function changeSlide(param) {
+	switch(true) {
+		case param === undefined: 
+			slideIndex++
+			if(slideIndex === (slides.length)) { 
+				slideIndex = 0
+			}
+			break
+		case param === 'previous': 
+			slideIndex--
+			if(slideIndex === -1) { 
+				slideIndex = slides.length-1
+			}
+			break
+		case Number.isInteger(param):
+			slideIndex = param
+			break
+		default :
+			console.log("paramètre incorrect")
+	}
+	return slideIndex
+}
