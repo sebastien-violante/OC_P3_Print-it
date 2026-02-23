@@ -54,23 +54,20 @@ displaySelectedDot(slideIndex)
 // Définition et écouteurs d'évènements sur les flèches et les dots
 const leftArrow = document.querySelector('.arrow_left')
 leftArrow.addEventListener('click', () => {
-	const newIndex = changeSlide('previous')
-	displaySlide(newIndex)
-	displaySelectedDot(newIndex)
+	displaySlide(changeSlide('previous'))
+	displaySelectedDot(changeSlide('previous'))
 })
 
 const rightArrow = document.querySelector('.arrow_right')
 rightArrow.addEventListener('click', () => {
-	const newIndex = changeSlide()
-	displaySlide(slideIndex)
-	displaySelectedDot(slideIndex)	
+	displaySlide(changeSlide())
+	displaySelectedDot(changeSlide())	
 })
 
 document.querySelectorAll('.dot').forEach(dot => {
 	dot.addEventListener('click', (event) => {
-		const newIndex = changeSlide(Number(event.target.id))
-		displaySlide(newIndex)
-		displaySelectedDot(newIndex)	
+		displaySlide(changeSlide(Number(event.target.id)))
+		displaySelectedDot(changeSlide(Number(event.target.id)))	
 	})
 })
 
